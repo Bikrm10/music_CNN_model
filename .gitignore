@@ -1,0 +1,5 @@
+*.h5
+*.pickle
+venv/
+model1.h5
+__pycache__

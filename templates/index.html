@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Genre Classification </title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kanit&family=Merriweather+Sans:wght@800&family=Open+Sans:wght@600&family=Poppins:wght@300;500;600&display=swap');
+        * {
+
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Kanit', sans-serif;
+        }
+       
+        .heading{
+            width: 100%;
+            text-align: center;
+            font-size: 40px;
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+       
+        .container{
+            margin: 70px;
+            border-radius:10px;
+          
+            height: calc(100vh -  100px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        img {
+            height: 200px;
+            width: 200px;
+        }
+        .content{
+            display: flex;
+            flex-direction: column;
+            gap:20px;
+        }
+        input[type='file']{
+            display: block;
+        }
+        label,input[type="submit"]{
+            background-color: #dc3545;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            outline: none;
+            border: none;
+
+        }
+        input[type='submit']{
+            background-color: #2874f0;
+        }
+        form{
+            display: flex;
+            gap: 20px;
+        }
+        #predictionResult{
+            color: #2874f0;
+        }
+
+    </style>
+    
+    
+</head>
+<body>
+    <h1 class="heading">Music Genre Classifier</h1>
+    
+    <div class="container">
+        <div class="img">
+           
+        </div>
+        <div class="content">
+            
+            <form action="/predict" method="post" enctype="multipart/form-data">
+                <label for="audioFile">Select an spectrogram image</label>
+                <input type="file" id="spectrogram_image" name="file" accept="image/*" required>
+                <br>
+                <input type="submit" value="Predict">
+            </form>
+
+            <h2>Prediction Result:</h2>
+            <p id="predictionResult"></p>
+
+            <audio controls id="audioPlayer">
+                <source src="" type="spectrogram_image/png">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    </div>
+
+    <script>
+        // Display prediction result
+        document.addEventListener('DOMContentLoaded', function () {
+            const predictionResultElement = document.getElementById('predictionResult');
+           // const audioPlayer = document.getElementById('audioPlayer');
+    
+            const form = document.querySelector('form');
+            form.addEventListener('submit', async function (event) {
+                event.preventDefault();
+    
+                const formData = new FormData(form);
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    body: formData
+                });
+    
+                const result = await response.json();
+                predictionResultElement.textContent = `Predicted Genre: ${result.predicted_class}`;
+                
+                // Update audio player source
+               // audioPlayer.src = result.audio_url;
+    
+                // Display the audio player and prediction result
+               // audioPlayer.style.display = 'block';
+                predictionResultElement.style.display = 'block';
+            });
+        });
+    </script>
+    
+</body>
+</html>
