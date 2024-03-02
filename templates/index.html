@@ -8,73 +8,160 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Kanit&family=Merriweather+Sans:wght@800&family=Open+Sans:wght@600&family=Poppins:wght@300;500;600&display=swap');
         * {
-
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Kanit', sans-serif;
         }
-       
-        .heading{
-            width: 100%;
-            text-align: center;
-            font-size: 40px;
-            position: absolute;
-            top: 20%;
-            left: 50%;
-            transform: translate(-50%,-50%);
+
+        body {
+            background-image: url("https://media.istockphoto.com/id/1225669546/photo/male-musician-playing-acoustic-guitar.jpg?s=1024x1024&w=is&k=20&c=MdA_jcLScuaNAjuhHdFhCsIgHrGIH65FimHeaEC2L-s=");
         }
-       
-        .container{
-            margin: 70px;
-            border-radius:10px;
-          
-            height: calc(100vh -  100px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
+
+        .heading {
+            text-align: center;
+            color: #4CAF50;
+            font-size: 40px;
+            margin-top: 50px;
+            margin-bottom: 50px;
+            text-emphasis-color:  #64f6ad;
+
+            
+        }
+        .heading3{
+            color: #12090a;
+            margin-top: -20px;
+            margin-left: 550px;
+        }
+
+        .container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    animation-name: fadeIn;
+    animation-duration: 4s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.pulsate {
+    animation: pulsate 10s infinite alternate;
+}
+
+@keyframes pulsate {
+    from {
+        transform: scale(1);
+        border-width: 1px;
+    }
+    to {
+        transform: scale(1.05);
+        border-width: 5px;
+    }
+}
+
+
+        .content {
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #d2e0e0;
+            text-align: center;
+            margin-top: 20px;
         }
 
         img {
             height: 200px;
             width: 200px;
         }
-        .content{
-            display: flex;
-            flex-direction: column;
-            gap:20px;
-        }
-        input[type='file']{
+
+        input[type='file'] {
             display: block;
+            margin-bottom: 10px;
+            margin-left: 60px;
         }
-        label,input[type="submit"]{
+
+        label,
+        input[type="submit"] {
             background-color: #dc3545;
             color: white;
             padding: 10px 15px;
             border-radius: 8px;
             outline: none;
             border: none;
+            cursor: pointer;
+        }
 
+        input[type='submit'] {
+            background-color: #4CAF50;
+            margin-top: -30px;
+            margin-bottom: 10px;
+            transition: background-color 2s ease;
         }
-        input[type='submit']{
-            background-color: #2874f0;
+
+        input[type="submit"]:hover {
+            background-color: #174319;
         }
-        form{
+        input[type="submit"]:active {
+            animation: clickAnimation 2s ease;
+        }
+        @keyframes clickAnimation {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+input[type="submit"]:active + .container {
+    animation: pulseBorder 2s infinite alternate; /* Pulsating border animation */
+}
+
+@keyframes pulseBorder {
+    0% {
+        border-color: #4CAF50;
+        box-shadow: 0 0 10px rgba(77, 6, 218, 0.5);
+    }
+    100% {
+        border-color: #f90f27;
+        box-shadow: 0 0 20px rgba(23, 67, 25, 0.8);
+    }
+}
+
+        form {
             display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             gap: 20px;
         }
-        #predictionResult{
+
+        #predictionResult {
             color: #2874f0;
+            margin-top: 30px;
         }
 
     </style>
+
     
     
 </head>
 <body>
-    <h1 class="heading">Music Genre Classifier</h1>
     
+    <h1 class="heading">Music Genre Classifier</h1>
+    <h3 class="heading3">Discover your journey with music</h3>
     <div class="container">
         <div class="img">
            
@@ -86,19 +173,30 @@
                 <input type="file" id="spectrogram_image" name="file" accept="image/*" required>
                 <br>
                 <input type="submit" value="Predict">
-            </form>
-
+                
+                </form>
+                
+              
             <h2>Prediction Result:</h2>
             <p id="predictionResult"></p>
 
-            <audio controls id="audioPlayer">
-                <source src="" type="spectrogram_image/png">
-                Your browser does not support the audio element.
-            </audio>
+        
         </div>
     </div>
+    <audio id="cheeringSound">
+        <source src="https://youtu.be/w0xbP83McGk" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+   
+    
 
     <script>
+
+
+
+
+
+
         // Display prediction result
         document.addEventListener('DOMContentLoaded', function () {
             const predictionResultElement = document.getElementById('predictionResult');
