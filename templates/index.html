@@ -13,145 +13,87 @@
             box-sizing: border-box;
             font-family: 'Kanit', sans-serif;
         }
-
-        body {
-            background-image: url("https://media.istockphoto.com/id/1225669546/photo/male-musician-playing-acoustic-guitar.jpg?s=1024x1024&w=is&k=20&c=MdA_jcLScuaNAjuhHdFhCsIgHrGIH65FimHeaEC2L-s=");
-        }
-
-        .heading {
-            text-align: center;
-            color: #4CAF50;
-            font-size: 40px;
-            margin-top: 50px;
-            margin-bottom: 50px;
-            text-emphasis-color:  #64f6ad;
-
-            
-        }
-        .heading3{
-            color: #12090a;
-            margin-top: -20px;
-            margin-left: 550px;
-        }
-
-        .container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    animation-name: fadeIn;
-    animation-duration: 4s;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-.pulsate {
-    animation: pulsate 10s infinite alternate;
-}
-
-@keyframes pulsate {
-    from {
-        transform: scale(1);
-        border-width: 1px;
-    }
-    to {
-        transform: scale(1.05);
-        border-width: 5px;
-    }
-}
-
-
-        .content {
+        .container{
             width: 100%;
-            max-width: 500px;
-            padding: 20px;
-            border-radius: 10px;
-            background-color: #d2e0e0;
-            text-align: center;
-            margin-top: 20px;
+            height: 200vh;
         }
-
-        img {
-            height: 200px;
-            width: 200px;
-        }
-
-        input[type='file'] {
-            display: block;
-            margin-bottom: 10px;
-            margin-left: 60px;
-        }
-
-        label,
-        input[type="submit"] {
-            background-color: #dc3545;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 8px;
-            outline: none;
-            border: none;
-            cursor: pointer;
-        }
-
-        input[type='submit'] {
-            background-color: #4CAF50;
-            margin-top: -30px;
-            margin-bottom: 10px;
-            transition: background-color 2s ease;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #174319;
-        }
-        input[type="submit"]:active {
-            animation: clickAnimation 2s ease;
-        }
-        @keyframes clickAnimation {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.1);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-input[type="submit"]:active + .container {
-    animation: pulseBorder 2s infinite alternate; /* Pulsating border animation */
-}
-
-@keyframes pulseBorder {
-    0% {
-        border-color: #4CAF50;
-        box-shadow: 0 0 10px rgba(77, 6, 218, 0.5);
-    }
-    100% {
-        border-color: #f90f27;
-        box-shadow: 0 0 20px rgba(23, 67, 25, 0.8);
-    }
-}
-
-        form {
+        .display{
+            height: 100vh;
+            width: 100%;
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
+        }
+        .display .left{
+            width: 50%;
+            padding: 100px 10px  10px 10px;
+
+        }
+        .left h1{
+            font-size:60px ;
+            margin: 10px 20px;
+            color: #6c63ff;
+        }
+        .left p{
+            margin: 20px 20px;
+        }
+        .right{
+            width: 50%;
+            height: 100%;
+        }
+        .right img{
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+        button{
+            border: 0;
+            padding: 15px 30px;
+            color: white;
+            background-color: #6c63ff;
+            margin: 20px;
+            border-radius: 5px;
         }
 
-        #predictionResult {
-            color: #2874f0;
-            margin-top: 30px;
+        .content{
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+            width: fit-content;
+            padding: 10px;
+            border-radius: 10px;
+            height: 400px;
+
+            margin: auto;
+
         }
+        #spectrogram_image{
+            margin: 20px 0;
+        }
+        input[type="file"]{
+            font-size: 18px;
+        }
+        input[type="submit"]{
+            width: 100%;
+            padding: 10px ;
+            font-size: 18px;
+            background-color: #6c63ff;
+            margin: 20px 0;
+            color: #fff;
+            border: 0;
+            border-radius: 5px;
+        }
+
+        .secPage{
+            display: flex;
+            margin-top: 100px;
+        }
+        .secPage .left{
+            width: 50%;
+            height: 400px;
+        }
+        .secPage .left img{
+            height: 100%;
+            width: 100%;
+            object-fit: contain;
+        }
+        
 
     </style>
 
@@ -160,27 +102,46 @@ input[type="submit"]:active + .container {
 </head>
 <body>
     
-    <h1 class="heading">Music Genre Classifier</h1>
-    <h3 class="heading3">Discover your journey with music</h3>
     <div class="container">
-        <div class="img">
-           
-        </div>
-        <div class="content">
-            
-            <form action="/predict" method="post" enctype="multipart/form-data">
-                <label for="audioFile">Select an spectrogram image</label>
-                <input type="file" id="spectrogram_image" name="file" accept="image/*" required>
-                <br>
-                <input type="submit" value="Predict">
-                
-                </form>
-                
-              
-            <h2>Prediction Result:</h2>
-            <p id="predictionResult"></p>
-
         
+        <div class="display">
+            <div class="left">
+                <h1>
+                    Discover Your Sound: GenreBlend
+                </h1>
+                <p>
+                    Our system employs spectrogram images as input to predict music genres<br/> based on their unique visual patterns. By leveraging these distinctive features,<br/> our platform offers efficient and accurate genre classification, enhancing the overall user experience
+                </p>
+                <button>
+                    Try Now
+                </button>
+            </div>
+            <div class="right">
+                <img src="https://i.ibb.co/zfcXp8V/main.png" alt="">
+                
+            </div>
+        </div>
+       
+        <div class="secPage">
+            <div class="left">
+                <img src="https://i.ibb.co/c1Wdf9n/sec.png" alt="">
+            </div>
+            <div class="content">
+            
+                <form action="/predict" method="post" enctype="multipart/form-data">
+                    <h2 for="audioFile">Select an spectrogram image</h2><br/>
+                    <input type="file" id="spectrogram_image" name="file" accept="image/*" required>
+                    <br>
+                    <input type="submit" value="Predict">
+                    
+                    </form>
+                    
+                  
+                <h2>Prediction Result:</h2>
+                <p id="predictionResult"></p>
+    
+            
+            </div>
         </div>
     </div>
     <audio id="cheeringSound">
@@ -213,7 +174,8 @@ input[type="submit"]:active + .container {
                 });
     
                 const result = await response.json();
-                predictionResultElement.textContent = `Predicted Genre: ${result.predicted_class}`;
+                predictionResultElement.textContent = `Predicted Genre : ${result.predicted_class}`;
+                console.log(predictionResultElement)
                 
                 // Update audio player source
                // audioPlayer.src = result.audio_url;
@@ -221,6 +183,7 @@ input[type="submit"]:active + .container {
                 // Display the audio player and prediction result
                // audioPlayer.style.display = 'block';
                 predictionResultElement.style.display = 'block';
+                predictionResultElement.style.color = "red";
             });
         });
     </script>

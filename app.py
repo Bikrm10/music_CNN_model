@@ -113,6 +113,7 @@ CLASS_NAMES = ['blues', 'classical', 'country', 'disco', 'hiphop', 'jazz', 'meta
 
 @app.route('/', methods=['GET'])
 def index():
+    
     # Render the HTML file located in the "templates" folder
     return render_template('index.html')
 
@@ -151,63 +152,12 @@ def predict():
         
         return jsonify({'predicted_class': predicted_class})
 
+
+@app.route('/predict/audio', methods=['POST'])
+def predict_audio(): 
+    
+    return jsonify({'message': 'success'})
 if __name__ == '__main__':
     app.run(debug=True)
 
-# from flask import Flask, request, jsonify
-# import numpy as np
-# from PIL import Image
-# from io import BytesIO
-# from tensorflow.keras.models import load_model
-# import tensorflow as tf
-
-# # Initialize Flask application
-# app = Flask(__name__)
-
-# # Load the pre-trained model
-# model = load_model('model1.h5')
-# # Ensure to compile the model before using it
-# # model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
-
-# # Define function to preprocess the image
-# def preprocess_image(image_path):
-#     image = image_path  # original image
-#     # resizing image
-#     new_size = (400, 400)
-#     resized_image = image.resize(image, new_size)
-#     # converting into array and expanding dimensions
-#     img_array = np.expand_dims(resized_image, axis=0)
-#     return img_array
-
-# # Define route to accept POST requests with image data
-# @app.route('/predict', methods=['POST'])
-# def predict():
-#     # Check if request contains an image
-#     if 'image' not in request.files:
-#         return jsonify({'error': 'No image provided'})
-
-#     # Read the image file
-#     image_file = request.files['image']
-#     print(request.files)
-    
-#     # Check if the file is a PNG image
-#     if image_file.filename.endswith('.png'):
-#         try:
-#             # Open the image using PIL
-#             image = Image.open(BytesIO(image_file.read()))
-#             # Preprocess the image
-#             processed_image = preprocess_image(image)
-#             # Predict using the model
-#             prediction = model.predict(processed_image)
-#             # Get the predicted class
-#             predicted_class = np.argmax(prediction, axis=1)[0]
-#             # Return the predicted class as JSON response
-#             return jsonify({'class': str(predicted_class)})
-#         except Exception as e:
-#             return jsonify({'error': str(e)})
-#     else:
-#         return jsonify({'error': 'Invalid file format. Please provide a PNG image'})
-
-# if __name__ == '__main__':
-#     app.run(debug=True)
 
